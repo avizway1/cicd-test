@@ -105,6 +105,31 @@
 					</excludes>
 				</configuration>
 			</plugin>
+
+			<!-- Ensure lowercase image copy is present in the built artifact (for case-sensitive servers) -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>3.1.0</version>
+				<executions>
+					<execution>
+						<id>copy-lowercase-images</id>
+						<phase>process-resources</phase>
+						<configuration>
+							<target>
+								<mkdir dir="${project.build.outputDirectory}/static/images" />
+								<copy file="${basedir}/src/main/resources/static/images/Jenkins-logo.png"
+									tofile="${project.build.outputDirectory}/static/images/jenkins-logo.png"
+									overwrite="true"
+								/>
+							</target>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 
