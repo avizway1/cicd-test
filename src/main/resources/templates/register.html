@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Jenkins CI/CD Project</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+    <link rel="icon" th:href="@{/images/favicon.svg}" type="image/svg+xml">
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            font-family: 'Inter', sans-serif;
+            padding: 20px 0;
+        }
+        .register-container {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        .register-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            padding: 40px;
+        }
+        .register-logo {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 20px;
+            display: block;
+        }
+        .btn-register {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            padding: 12px;
+            font-weight: 600;
+        }
+        .btn-register:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="register-container">
+            <div class="register-card">
+                <img th:src="@{/images/Jenkins-logo.png}" alt="Logo" class="register-logo"/>
+                <h2 class="text-center mb-4">Create Account</h2>
+                
+                <div th:if="${error}" class="alert alert-danger" role="alert">
+                    <span th:text="${error}"></span>
+                </div>
+                
+                <form th:action="@{/register}" th:object="${user}" method="post">
+                    <div class="form-group">
+                        <label for="username">Username *</label>
+                        <input type="text" class="form-control" th:field="*{username}" 
+                               id="username" placeholder="Choose a username" required>
+                        <small th:if="${#fields.hasErrors('username')}" 
+                               th:errors="*{username}" class="text-danger"></small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email *</label>
+                        <input type="email" class="form-control" th:field="*{email}" 
+                               id="email" placeholder="your.email@example.com" required>
+                        <small th:if="${#fields.hasErrors('email')}" 
+                               th:errors="*{email}" class="text-danger"></small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="fullName">Full Name</label>
+                        <input type="text" class="form-control" th:field="*{fullName}" 
+                               id="fullName" placeholder="Your full name">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="password">Password *</label>
+                        <input type="password" class="form-control" th:field="*{password}" 
+                               id="password" placeholder="At least 6 characters" required>
+                        <small th:if="${#fields.hasErrors('password')}" 
+                               th:errors="*{password}" class="text-danger"></small>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary btn-block btn-register">Register</button>
+                </form>
+                
+                <hr class="my-4">
+                
+                <div class="text-center">
+                    <p class="mb-0">Already have an account? <a th:href="@{/login}">Login here</a></p>
+                    <p class="mt-2"><a th:href="@{/}">← Back to Home</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
